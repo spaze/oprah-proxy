@@ -24,7 +24,7 @@ This is just for research purposes, to study how things work, no harm intended.
 
 ## Example `openssl s_client` command:
 ```
-URL="http://www.opera.com" PROXY=159.203.42.222:443 HEADER="Proxy-Authorization: MURBNTY1NDRFMkQ4NUZEMTgxRDY2OUUxNzM1ODg1MjI3QTRFQUNGQzpGQTI3NzIyMzhEMzg2MzlDMzYzQjk0RTA2MDc3NUIzNzMyNkIyQUEzQTM3OEVBNTdCOEVGQTUxQ0EzMjg0Qjc5"; echo -e "GET $URL HTTP/1.0\n$HEADER\n\n" | openssl s_client -connect $PROXY -ign_eof
+URL="http://www.opera.com" PROXY=159.203.42.222:443 HEADER="Proxy-Authorization: Basic MURBNTY1NDRFMkQ4NUZEMTgxRDY2OUUxNzM1ODg1MjI3QTRFQUNGQzpGQTI3NzIyMzhEMzg2MzlDMzYzQjk0RTA2MDc3NUIzNzMyNkIyQUEzQTM3OEVBNTdCOEVGQTUxQ0EzMjg0Qjc5"; echo -e "GET $URL HTTP/1.0\n$HEADER\n\n" | openssl s_client -connect $PROXY -ign_eof
 ```
 Where
 - `URL` is a URL you want to load, change it to fit your needs

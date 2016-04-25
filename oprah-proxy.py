@@ -144,7 +144,7 @@ class OprahProxy:
 		print('INFO: Username: %s' % self.device_id_hash)
 		print('INFO: Password: %s' % self.device_password)
 		creds = ('%s:%s' % (self.device_id_hash, self.device_password)).encode('ascii')
-		header = 'Proxy-Authorization: %s' % base64.b64encode(creds).decode('ascii')
+		header = 'Proxy-Authorization: Basic %s' % base64.b64encode(creds).decode('ascii')
 		print('INFO: HTTP header %s' % header)
 		print('DEBUG: Example bash command: URL="http://www.opera.com" PROXY=%s HEADER="%s"; echo -e "GET $URL HTTP/1.0\\n$HEADER\\n\\n" | openssl s_client -connect $PROXY -ign_eof' % (self.example_proxy, header))
 		print('DEBUG: GET ... HTTP/1.1 does not work with these proxies, only GET ... HTTP/1.0')
