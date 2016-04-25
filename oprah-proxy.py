@@ -147,7 +147,6 @@ class OprahProxy:
 		header = 'Proxy-Authorization: Basic %s' % base64.b64encode(creds).decode('ascii')
 		print('INFO: HTTP header %s' % header)
 		print('DEBUG: Example bash command: URL="http://www.opera.com" PROXY=%s HEADER="%s"; echo -e "GET $URL HTTP/1.0\\n$HEADER\\n\\n" | openssl s_client -connect $PROXY -ign_eof' % (self.example_proxy, header))
-		print('DEBUG: GET ... HTTP/1.1 does not work with these proxies, only GET ... HTTP/1.0')
 		print('DEBUG: Sorry, I couldn\'t get curl to send a request via such HTTPS proxy, so it\'s s_client for now')
 
 
