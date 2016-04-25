@@ -30,3 +30,6 @@ Where
 - `URL` is a URL you want to load, change it to fit your needs
 - `PROXY` is a proxy from the list (the one in the example is the first listed proxy with port 443), change it if you want
 - `HEADER` is a `Proxy-Authorization` HTTP header using generated credentials, no need to change this
+
+## Usage with other browsers
+You can use Opera's proxies with other browsers via [proxy auto-config](https://en.wikipedia.org/wiki/Proxy_auto-config) using the provided `pac.js` file. In Firefox go to *Options* → *Advanced* → *Network* → *Connection* → *Settings* and use https://raw.githubusercontent.com/spaze/oprah-proxy/master/pac.js as *Automatic proxy configuration URL*. When asked, use the credentials provided by `oprah-proxy.py` script. The PAC file uses hardcoded location (`DE`), if you want to use other location just download the file, change the hostname (available hostnames are `{ca,de,us}.opera-proxy.net`), change your browser configuration, and you should be ready to go. Please note that Opera uses different, *numbered* hostnames when connecting to proxies (e.g. `de0.opera-proxy.net`) but these don't resolve outside of Opera. There's a certain overlap of IPs for `de.opera-proxy.net` and `de0.opera-proxy.net` so my guess is they use the same hosts with just different hostnames.

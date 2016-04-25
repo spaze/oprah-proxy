@@ -147,7 +147,7 @@ class OprahProxy:
 		header = 'Proxy-Authorization: Basic %s' % base64.b64encode(creds).decode('ascii')
 		print('INFO: HTTP header %s' % header)
 		print('DEBUG: Example bash command: URL="http://www.opera.com" PROXY=%s HEADER="%s"; echo -e "GET $URL HTTP/1.0\\n$HEADER\\n\\n" | openssl s_client -connect $PROXY -ign_eof' % (self.example_proxy, header))
-		print('DEBUG: Sorry, I couldn\'t get curl to send a request via such HTTPS proxy, so it\'s s_client for now')
+		print('DEBUG: For PAC-file for other browsers see https://github.com/spaze/oprah-proxy#usage-with-other-browsers')
 
 
 you_get_a_proxy = OprahProxy('se0304', '3690AC1CE5B39E6DC67D9C2B46D3C79923C43F05527D4FFADCC860740E9E2B25')
