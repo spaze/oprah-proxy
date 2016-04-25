@@ -1,6 +1,14 @@
 #!/usr/bin/python3
 
-import requests, uuid, hashlib, urllib.parse, base64
+import uuid, hashlib, urllib.parse, base64
+
+try:
+	import requests
+except:
+	print('ERROR: Cannot import requests')
+	print('DEBUG: Please install Requests for Python 3, see http://docs.python-requests.org/en/master/user/install/ or use your favorite package manager (e.g. apt-get install python3-requests)')
+	exit(2);
+
 
 class OprahProxy:
 	''' Everybody gets a proxy! '''
