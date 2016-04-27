@@ -9,7 +9,7 @@ Opera "VPN" introduced in Opera 38 Developer Edition is not a VPN, it's actually
 Just run `oprah-proxy.py`. It will generate credentials for you and list available proxies so you can use them elsewhere. Unfortunately I've had no success using any of these proxies as a proxy for `curl` for example. But it works with OpenSSL's `s_client` tool and the script will also print the required command for you.
 
 ## Requirements
-Python 3 & [Requests](http://docs.python-requests.org/). The API server works only with clients with (Server Name Indication) SNI support. Python 3 and Python 2.7.9+ include native support for SNI in their TLS modules. I was too lazy to build a version check, so I went with Python 3.
+Python 3 & [Requests](http://docs.python-requests.org/). The API server works only with clients with Server Name Indication (SNI) support. Python 3 and Python 2.7.9+ include native support for SNI in their TLS modules. I was too lazy to build a version check, so I went with Python 3.
 
 ## Technical details
 The proxy is a *secure* one, which means the browser talks to the proxy server via HTTPS even if it loads a plain HTTP site. Hostname resolution (*DNS*) is also done remotely on the proxy server, so the browser does not leak hostnames when using this proxy. Currently, Opera leaks IP address via WebRTC and plugins, but Opera Software is aware of it and plans to fix it in a future release.
