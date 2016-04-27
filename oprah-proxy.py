@@ -108,6 +108,7 @@ class OprahProxy:
 		}
 		result = self.post('/v2/register_device', data)
 		self.device_id = result['data']['device_id']
+		print('DEBUG: Device id: %s' % self.device_id)
 		self.device_id_hash = hashlib.sha1(str(self.device_id).encode('ascii')).hexdigest().upper()
 		self.device_password = result['data']['device_password']
 		print('DEBUG: Device registered')
