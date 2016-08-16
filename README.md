@@ -3,7 +3,7 @@
 
 !["Everybody gets a proxy" logo](logo.jpg)
 
-Opera "VPN" introduced in Opera 38 Developer Edition is not a VPN, it's actually a proxy for the browser only, but it's free and unlimited so why not use it for some other apps, too.
+Opera "VPN" introduced in Opera 38 Developer Edition is not a VPN, it's actually a proxy for the browser only, but it's free and unlimited so why not use it for some other apps, too. There's also [Opera VPN for iOS](https://itunes.apple.com/us/app/opera-free-vpn-unlimited-free/id1080756781?mt=8) which is a real VPN. This is about the browser one.
 
 ## Usage
 Just run `oprah-proxy.py`. It will generate credentials for you and list available proxies so you can use them elsewhere. Unfortunately I've had no success using any of these proxies as a proxy for `curl` for example. But it works with OpenSSL's `s_client` tool and the script will also print the required command for you.
@@ -17,7 +17,7 @@ The proxy is a *secure* one, which means the browser talks to the proxy server v
 For more technical details, including HTTP API calls, see my [technical write-up](https://gist.github.com/spaze/558b7c4cd81afa7c857381254ae7bd10).
 
 ## A message to Opera
-Opera insists to call this *a browser VPN*. Sorry Opera, it's not a VPN, and calling it *a browser VPN* does not make it one. A VPN protects all connections and not just the browser ones. We've been teaching people that VPN protects their devices and operating systems and then you bake a proxy, although a secure one, in the browser and call it a VPN, that's bullshit, *pardon my French*. The feature is quite nice, but calling it *a VPN* could eventually be harmful to privacy, because of false sense of security.
+Opera insists to call this *a browser VPN*. Sorry Opera, it's not a VPN, and calling it *a browser VPN* does not make it one. A VPN protects all connections and not just the browser ones. We've been teaching people that VPN protects their devices and operating systems and then you bake a proxy, although a secure one, in the browser and call it a VPN, that's bullshit, *pardon my French*. The feature is quite nice, but calling it *a VPN* could eventually be harmful to privacy, because of false sense of security. And then you release [Opera VPN](https://itunes.apple.com/us/app/opera-free-vpn-unlimited-free/id1080756781?mt=8) which *is* a VPN, unlike the VPN in the browser. Naming things, one of the only two hard things in Computer Science, right?
 
 ## Disclaimer
 This is just for research purposes, to study how things work, no harm intended.
