@@ -127,6 +127,10 @@ class OprahProxy:
                 'requested_geo': '"%s"' % country_code}
         result = self.post('/v2/discover', data)
 
+        print('INFO: Your location is %s%s%s' %
+              (result['data']['requester_geo']['country_code'],
+               '/' if result['data']['requester_geo']['state_code'] else '',
+               result['data']['requester_geo']['state_code']))
         for ip in result['data']['ips']:
             for port in ip['ports']:
                 if port == 443 and self.example_proxy is None:
