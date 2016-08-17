@@ -131,8 +131,9 @@ class OprahProxy:
             for port in ip['ports']:
                 if port == 443 and self.example_proxy is None:
                     self.example_proxy = '%s:%s' % (ip['ip'], port)
-                print('INFO: Proxy in %s %s:%s' %
-                      (ip['geo']['country_code'], ip['ip'], port))
+                print('INFO: Proxy in %s/%s %s:%s' %
+                      (ip['geo']['country_code'], ip['geo']['state_code'],
+                       ip['ip'], port))
         print('DEBUG: Proxies discovered')
 
     def everybody_gets_a_proxy(self):
