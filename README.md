@@ -3,7 +3,7 @@
 
 !["Everybody gets a proxy" logo](logo.jpg)
 
-Opera "VPN" introduced in Opera 38 Developer Edition is not a VPN, it's actually a proxy for the browser only, but it's free and unlimited so why not use it for some other apps, too. There's also [Opera VPN for iOS](https://itunes.apple.com/us/app/opera-free-vpn-unlimited-free/id1080756781?mt=8) which is a real VPN. This is about the browser one.
+Opera "VPN" introduced in Opera 38 Developer Edition is not a VPN, it's actually a proxy for the browser only, but it's free and unlimited so why not use it for some other apps, too. There's also [Opera VPN for iOS](https://itunes.apple.com/us/app/opera-free-vpn-unlimited-free/id1080756781?mt=8) and [Opera VPN for Android](https://play.google.com/store/apps/details?id=com.opera.vpn), both are real VPN. This here is about the browser one.
 
 ## Usage
 Just run `oprah-proxy.py`. It will generate credentials for you and list available proxies so you can use them elsewhere. Unfortunately I've had no success using any of these proxies as a proxy for `curl` for example. But it works with OpenSSL's `s_client` tool and the script will also print the required command for you.
