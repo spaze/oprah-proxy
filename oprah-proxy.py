@@ -45,16 +45,13 @@ class OprahProxy:
 
     def register_subscriber(self):
         print('DEBUG: Call register_subscriber')
-        email_user = uuid.uuid4()
-        email = '%s@mailinator.com' % email_user
+        email = '%s@%s.surfeasy.vpn' % (uuid.uuid4(), self.client_type)
         password = uuid.uuid4()
         password_hash = hashlib.sha1(
             str(password).encode('ascii')).hexdigest().upper()
         print('DEBUG: Your SurfEasy email: %s' % email)
         print('DEBUG: Your SurfEasy password: %s' % password)
         print('DEBUG: Your SurfEasy password hash: %s' % password_hash)
-        print('DEBUG: Your mailbox: https://mailinator.com/inbox2.jsp?%s' %
-              urllib.parse.urlencode({'public_to': email_user}))
         print("DEBUG: These are not the credentials you are looking for "
               "(you won't probably need these, ever)")
 
