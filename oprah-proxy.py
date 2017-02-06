@@ -33,7 +33,8 @@ class OprahProxy:
 
     def post(self, url, data):
         headers = {'SE-Client-Type': self.client_type,
-                   'SE-Client-API-Key': self.client_key}
+                   'SE-Client-API-Key': self.client_key,
+                   'SE-Operating-System': 'Windows'}
 
         result = self.session.post('https://api.surfeasy.com%s' % url, data,
                                    headers=headers).json()
