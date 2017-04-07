@@ -14,6 +14,7 @@ except ImportError:
                   'favorite package manager (e.g. apt-get install python3-requests)')
     exit(2)
 
+
 class OprahProxy:
     """ Everybody gets a proxy! """
 
@@ -102,7 +103,12 @@ class OprahProxy:
                 logging.info('Proxy in %s/%s %s:%s' %
                              (ip['geo']['country_code'], ip['geo']['state_code'],
                               ip['ip'], port))
-                proxies.append((ip['ip'], port, ip['geo']['country_code'], ip['geo']['state_code']))
+                proxies.append({
+                    'ip': ip['ip'],
+                    'port': port,
+                    'country_code': ip['geo']['country_code'],
+                    'state_code': ip['geo']['state_code']
+                })
 
         logging.debug('%s proxies discovered' % len(proxies))
         return proxies
@@ -149,8 +155,8 @@ if __name__ == '__main__':
     example_proxy = None
     for country_code in op.geo_list():
         for item in op.discover(country_code):
-            if not example_proxy and item[1] == 443:
-                example_proxy = '%s:%s' % (item[0], item[1])
+            if not example_proxy and item['port'] == 443:
+                example_proxy = '%s:%s' % (item['ip'], item['port'])
 
     logging.info('Pick a proxy from the list above and use these credentials:')
     logging.info('Username: %s' % op.device_id_hash)
