@@ -2,16 +2,16 @@
 
 import base64
 import hashlib
-import urllib.parse
 import uuid
+import logging
 
 try:
     import requests
 except ImportError:
-    print('ERROR: Cannot import requests')
-    print('DEBUG: Please install Requests for Python 3, see '
-          'http://docs.python-requests.org/en/master/user/install/ or use your '
-          'favorite package manager (e.g. apt-get install python3-requests)')
+    logging.error('Cannot import requests')
+    logging.debug('Please install Requests for Python 3, see '
+                  'http://docs.python-requests.org/en/master/user/install/ or use your '
+                  'favorite package manager (e.g. apt-get install python3-requests)')
     exit(2)
 
 
@@ -24,7 +24,6 @@ class OprahProxy:
     device_id = ''
     device_id_hash = ''
     device_password = ''
-    example_proxy = None
 
     def __init__(self, client_type, client_key):
         self.client_type = client_type
@@ -40,127 +39,134 @@ class OprahProxy:
                                    headers=headers).json()
         code = list(result['return_code'].keys())[0]
         if code != '0':
-            print('ERROR: %s' % result['return_code'][code])
+            logging.debug('ERROR: %s' % result['return_code'][code])
             exit(1)
         return result
 
     def register_subscriber(self):
-        print('DEBUG: Call register_subscriber')
+        logging.debug('Call register_subscriber')
         email = '%s@%s.surfeasy.vpn' % (uuid.uuid4(), self.client_type)
         password = uuid.uuid4()
         password_hash = hashlib.sha1(
             str(password).encode('ascii')).hexdigest().upper()
-        print('DEBUG: Your SurfEasy email: %s' % email)
-        print('DEBUG: Your SurfEasy password: %s' % password)
-        print('DEBUG: Your SurfEasy password hash: %s' % password_hash)
-        print("DEBUG: These are not the credentials you are looking for "
-              "(you won't probably need these, ever)")
+        logging.debug('Your SurfEasy email: %s' % email)
+        logging.debug('Your SurfEasy password: %s' % password)
+        logging.debug('Your SurfEasy password hash: %s' % password_hash)
+        logging.debug("These are not the credentials you are looking for "
+                      "(you won't probably need these, ever)")
 
         data = {'email': email,
                 'password': password_hash}
         result = self.post('/v2/register_subscriber', data)
-        print('DEBUG: Subscriber registered')
-
-    @staticmethod
-    def you_get_a_proxy():
-        print('++++++++++++++++++++++++++=======================~~~~~~~::::')
-        print(',..,,,.,,...,,,.,,,,,,,,,,............,.....,.,,::::~~======')
-        print(',,,,,:,,,,,,,,,,,,,,                    ,.,,,,,,,,,,,,,....~')
-        print('~~~~~~~:::::::::::::  YOU GET A PROXY!  ,,,,,,,,,,,,,,,,,:~=')
-        print('~~===~~~~::::::::::.                    ,,,,,,,,,,,,,,,~~~:~')
-        print('::~:::::::::::::::,,...,~=::~=~:.....,,,,,,,,,,,,,,,:~:~:,::')
-        print('??+=..,++++++++++=.....:===I+~=~....,,~~=~~~~~~~:~====~,,::~')
-        print('::~....,...............~=~~~~:=~,...,.~~~======~==++=~:====+')
-        print('::~...,:,,,,,,,,.......:==~+=:~:,.....,,,,,,,~~~====~,,,,,,,')
-        print(':::~~~:,::,,::::,......+~~===~:,.....,,,,,,~~~~~==~,,,,....,')
-        print('~:~:,,,,,:::::,..........~~::~,:....:~~~~~::::~:::::,,,,,,,,')
-        print('~...~~~,,::~~::~:........~~~:~::.:,,:~::::::::::::::::::::::')
-        print('+..???+?~,::::::::::::~:~::~~~:~::::::::::::::::~~=~~~~~~~~=')
-        print('...?????+?,.:::::::::::~~:~~::~:::::::::::::::,~++++++++++++')
-        print('?=??????+??~,::::::::~~~~~~~~~~::::::::::::::,=+++++++++++++')
-        print('????????????::::::,::~~~~~~~~~~:::::::::::::,+++++++++++++++')
-        print('??+??????????:,,::,:::~~~~~~~:::::::::::::,+++++++++++++++++')
-        print('??????????????+,,,,:::~~,~~~~~:::=,:::::,?+?++++++++++++++++')
-        print('????????????????+,:::~~:,~~~~~~~~:~::::=+??+?++?++++++++++++')
-        print('??????????????????:::~~~~~~~~~~~:::::::???????++++++++++++++')
-        print('??????????????????=:::~~~~~~~~~::::::::+??????+++++?+?++++++')
-        print('=+==+====++++++++==:::~:,~~~~~:::,::::~====~~::::,,...,:~~=+')
-        print('++++++++++++===++++::~:~~~~~~::::~::::=+++++++++++++========')
-        print('=====+++++=====++++:~:~~~~~~::::::::::~++===================')
-        print('+++==+======+++                           ==================')
-        print('~~~~==========~  EVERYBODY GETS A PROXY!  ~~~~~~~~~~~~~~~~~~')
-        print('~~~~~~~~~~~===~                           ~~~~~~~~~~~~~~~~~~')
-        print('=============++===:::::::::::::::::::::~~~~~~~~~~~~~~~~~~~:~')
-        print('https://github.com/spaze/oprah-proxy :::==~=~~~~~~~~=~~~~~~~')
+        logging.debug('Subscriber registered')
+        return result
 
     def register_device(self):
-        print('DEBUG: Call register_device')
+        logging.debug('Call register_device')
         data = {'client_type': self.client_type,
                 'device_hash': '4BE7D6F1BD040DE45A371FD831167BC108554111',
                 'device_name': 'Opera-Browser-Client'}
 
         result = self.post('/v2/register_device', data)
         self.device_id = result['data']['device_id']
-        print('DEBUG: Device id: %s' % self.device_id)
+        logging.debug('Device id: %s' % self.device_id)
         self.device_id_hash = hashlib.sha1(
             str(self.device_id).encode('ascii')).hexdigest().upper()
         self.device_password = result['data']['device_password']
-        print('DEBUG: Device registered')
+        logging.debug('Device registered')
 
     def geo_list(self):
-        print('DEBUG: Call geo_list')
+        logging.debug('Call geo_list')
         data = {'device_id': self.device_id_hash}
         result = self.post('/v2/geo_list', data)
         codes = []
         for geo in result['data']['geos']:
             codes.append(geo['country_code'])
-            print('INFO: Supported country: %s %s' %
-                  (geo['country_code'], geo['country']))
-        print('DEBUG: Geo list fetched')
+            logging.info('Supported country: %s %s' %
+                         (geo['country_code'], geo['country']))
+        logging.debug('Geo list fetched')
         return codes
 
     def discover(self, country_code):
-        print('DEBUG: Call discover %s' % country_code)
+        logging.debug('Call discover %s' % country_code)
         data = {'serial_no': self.device_id_hash,
                 'requested_geo': '"%s"' % country_code}
         result = self.post('/v2/discover', data)
 
-        print('INFO: Your location is %s%s%s' %
-              (result['data']['requester_geo']['country_code'],
-               '/' if result['data']['requester_geo']['state_code'] else '',
-               result['data']['requester_geo']['state_code']))
+        logging.info('Your location is %s%s%s' %
+                     (result['data']['requester_geo']['country_code'],
+                      '/' if result['data']['requester_geo']['state_code'] else '',
+                      result['data']['requester_geo']['state_code']))
+        proxies = []
         for ip in result['data']['ips']:
             for port in ip['ports']:
-                if port == 443 and self.example_proxy is None:
-                    self.example_proxy = '%s:%s' % (ip['ip'], port)
-                print('INFO: Proxy in %s/%s %s:%s' %
-                      (ip['geo']['country_code'], ip['geo']['state_code'],
-                       ip['ip'], port))
-        print('DEBUG: Proxies discovered')
+                logging.info('Proxy in %s/%s %s:%s' %
+                             (ip['geo']['country_code'], ip['geo']['state_code'],
+                              ip['ip'], port))
+                proxies.append({
+                    'ip': ip['ip'],
+                    'port': port,
+                    'country_code': ip['geo']['country_code'],
+                    'state_code': ip['geo']['state_code']
+                })
 
-    def everybody_gets_a_proxy(self):
-        self.register_subscriber()
-        self.register_device()
-        for country_code in self.geo_list():
-            self.discover(country_code)
-        print(
-            'INFO: Pick a proxy from the list above and use these credentials:')
-        print('INFO: Username: %s' % self.device_id_hash)
-        print('INFO: Password: %s' % self.device_password)
-        creds = ('%s:%s' % (self.device_id_hash, self.device_password)).encode(
-            'ascii')
-        header = 'Proxy-Authorization: Basic %s' % base64.b64encode(
-            creds).decode('ascii')
-        print('INFO: HTTP header %s' % header)
-        print('DEBUG: Example bash command: URL="http://www.opera.com" PROXY=%s '
-              'HEADER="%s"; echo -e "GET $URL HTTP/1.0\\n$HEADER\\n\\n" | '
-              'openssl s_client -connect $PROXY -ign_eof' % (
-                self.example_proxy, header))
-        print('DEBUG: For PAC-file for other browsers see '
-              'https://github.com/spaze/oprah-proxy#usage-with-other-browsers')
+        logging.debug('%s proxies discovered' % len(proxies))
+        return proxies
 
+if __name__ == '__main__':
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format='%(asctime)s %(levelname)-8s %(message)s'
+    )
 
-you_get_a_proxy = OprahProxy('se0310',
-                             'AE4CA57D1E3C0E6711C53416BFA0988F08D41B428D26D053A4C46EC72A79B9E7')
-you_get_a_proxy.you_get_a_proxy()
-you_get_a_proxy.everybody_gets_a_proxy()
+    logging.debug('++++++++++++++++++++++++++=======================~~~~~~~::::')
+    logging.debug(',..,,,.,,...,,,.,,,,,,,,,,............,.....,.,,::::~~======')
+    logging.debug(',,,,,:,,,,,,,,,,,,,,                    ,.,,,,,,,,,,,,,....~')
+    logging.debug('~~~~~~~:::::::::::::  YOU GET A PROXY!  ,,,,,,,,,,,,,,,,,:~=')
+    logging.debug('~~===~~~~::::::::::.                    ,,,,,,,,,,,,,,,~~~:~')
+    logging.debug('::~:::::::::::::::,,...,~=::~=~:.....,,,,,,,,,,,,,,,:~:~:,::')
+    logging.debug('??+=..,++++++++++=.....:===I+~=~....,,~~=~~~~~~~:~====~,,::~')
+    logging.debug('::~....,...............~=~~~~:=~,...,.~~~======~==++=~:====+')
+    logging.debug('::~...,:,,,,,,,,.......:==~+=:~:,.....,,,,,,,~~~====~,,,,,,,')
+    logging.debug(':::~~~:,::,,::::,......+~~===~:,.....,,,,,,~~~~~==~,,,,....,')
+    logging.debug('~:~:,,,,,:::::,..........~~::~,:....:~~~~~::::~:::::,,,,,,,,')
+    logging.debug('~...~~~,,::~~::~:........~~~:~::.:,,:~::::::::::::::::::::::')
+    logging.debug('+..???+?~,::::::::::::~:~::~~~:~::::::::::::::::~~=~~~~~~~~=')
+    logging.debug('...?????+?,.:::::::::::~~:~~::~:::::::::::::::,~++++++++++++')
+    logging.debug('?=??????+??~,::::::::~~~~~~~~~~::::::::::::::,=+++++++++++++')
+    logging.debug('????????????::::::,::~~~~~~~~~~:::::::::::::,+++++++++++++++')
+    logging.debug('??+??????????:,,::,:::~~~~~~~:::::::::::::,+++++++++++++++++')
+    logging.debug('??????????????+,,,,:::~~,~~~~~:::=,:::::,?+?++++++++++++++++')
+    logging.debug('????????????????+,:::~~:,~~~~~~~~:~::::=+??+?++?++++++++++++')
+    logging.debug('??????????????????:::~~~~~~~~~~~:::::::???????++++++++++++++')
+    logging.debug('??????????????????=:::~~~~~~~~~::::::::+??????+++++?+?++++++')
+    logging.debug('=+==+====++++++++==:::~:,~~~~~:::,::::~====~~::::,,...,:~~=+')
+    logging.debug('++++++++++++===++++::~:~~~~~~::::~::::=+++++++++++++========')
+    logging.debug('=====+++++=====++++:~:~~~~~~::::::::::~++===================')
+    logging.debug('+++==+======+++                           ==================')
+    logging.debug('~~~~==========~  EVERYBODY GETS A PROXY!  ~~~~~~~~~~~~~~~~~~')
+    logging.debug('~~~~~~~~~~~===~                           ~~~~~~~~~~~~~~~~~~')
+    logging.debug('=============++===:::::::::::::::::::::~~~~~~~~~~~~~~~~~~~:~')
+    logging.debug('https://github.com/spaze/oprah-proxy :::==~=~~~~~~~~=~~~~~~~')
+
+    op = OprahProxy('se0310', 'AE4CA57D1E3C0E6711C53416BFA0988F08D41B428D26D053A4C46EC72A79B9E7')
+    op.register_subscriber()
+    op.register_device()
+    example_proxy = None
+    for country_code in op.geo_list():
+        for item in op.discover(country_code):
+            if not example_proxy and item['port'] == 443:
+                example_proxy = '%s:%s' % (item['ip'], item['port'])
+
+    logging.info('Pick a proxy from the list above and use these credentials:')
+    logging.info('Username: %s' % op.device_id_hash)
+    logging.info('Password: %s' % op.device_password)
+    creds = ('%s:%s' % (op.device_id_hash, op.device_password)).encode('ascii')
+    header = 'Proxy-Authorization: Basic %s' % base64.b64encode(creds).decode('ascii')
+    logging.info('HTTP header %s' % header)
+    logging.debug('Example bash command: URL="http://www.opera.com" PROXY=%s '
+                  'HEADER="%s"; echo -e "GET $URL HTTP/1.0\\n$HEADER\\n\\n" | '
+                  'openssl s_client -connect $PROXY -ign_eof' %
+                  (example_proxy, header))
+    logging.debug('For PAC-file for other browsers see '
+                  'https://github.com/spaze/oprah-proxy#usage-with-other-browsers')
