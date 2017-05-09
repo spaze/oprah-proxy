@@ -91,29 +91,11 @@ class OprahProxy:
         return codes
 
     def discover(self, country_code):
-        logging.debug('Call discover %s' % country_code)
-        data = {'serial_no': self.device_id_hash,
-                'requested_geo': '"%s"' % country_code}
-        result = self.post('/v2/discover', data)
-
-        logging.info('Your location is %s%s%s' %
-                     (result['data']['requester_geo']['country_code'],
-                      '/' if result['data']['requester_geo']['state_code'] else '',
-                      result['data']['requester_geo']['state_code']))
-        proxies = []
-        for ip in result['data']['ips']:
-            for port in ip['ports']:
-                logging.info('Proxy in %s/%s %s:%s' %
-                             (ip['geo']['country_code'], ip['geo']['state_code'],
-                              ip['ip'], port))
-                proxies.append({
-                    'ip': ip['ip'],
-                    'port': port,
-                    'country_code': ip['geo']['country_code'],
-                    'state_code': ip['geo']['state_code']
-                })
-
-        logging.debug('%s proxies discovered' % len(proxies))
+        proxies = [{
+            'hostname': '%s.opera-proxy.net' % country_code.lower(),
+            'port': 443
+        }]
+        logging.info('Proxy in %s %s:%s' % (country_code, proxies[0]['hostname'], proxies[0]['port']))
         return proxies
 
 if __name__ == '__main__':
@@ -161,7 +143,7 @@ if __name__ == '__main__':
     for country_code in op.geo_list():
         for item in op.discover(country_code):
             if not example_proxy and item['port'] == 443:
-                example_proxy = '%s:%s' % (item['ip'], item['port'])
+                example_proxy = '%s:%s' % (item['hostname'], item['port'])
 
     logging.info('Pick a proxy from the list above and use these credentials:')
     logging.info('Username: %s' % op.device_id_hash)
