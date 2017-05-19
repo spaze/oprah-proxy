@@ -20,22 +20,19 @@ class OprahProxy:
 
     client_type = ''
     client_key = ''
-    client_version = ''
     session = None
     device_id = ''
     device_id_hash = ''
     device_password = ''
 
-    def __init__(self, client_type, client_key, client_version):
+    def __init__(self, client_type, client_key):
         self.client_type = client_type
         self.client_key = client_key
-        self.client_version = client_version
         self.session = requests.Session()
 
     def post(self, url, data):
         headers = {'SE-Client-Type': self.client_type,
                    'SE-Client-API-Key': self.client_key,
-                   'SE-Client-Version': self.client_version,
                    'SE-Operating-System': 'Windows'}
 
         result = self.session.post('https://api.surfeasy.com%s' % url, data,
@@ -134,9 +131,7 @@ if __name__ == '__main__':
     logging.debug('=============++===:::::::::::::::::::::~~~~~~~~~~~~~~~~~~~:~')
     logging.debug('https://github.com/spaze/oprah-proxy :::==~=~~~~~~~~=~~~~~~~')
 
-    op = OprahProxy('se0310',
-                    'AE4CA57D1E3C0E6711C53416BFA0988F08D41B428D26D053A4C46EC72A79B9E7',
-                    'Stable 44.0.2510.1218')
+    op = OprahProxy('se0310', 'AE4CA57D1E3C0E6711C53416BFA0988F08D41B428D26D053A4C46EC72A79B9E7')
     op.register_subscriber()
     op.register_device()
     example_proxy = None
