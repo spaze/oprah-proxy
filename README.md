@@ -22,7 +22,7 @@ For more technical details, including HTTP API calls, see my [technical write-up
 Opera insists to call this *a browser VPN*. Sorry Opera, it's not a VPN, and calling it *a browser VPN* does not make it one. A VPN protects all connections and not just the browser ones. We've been teaching people that VPN protects their devices and operating systems and then you bake a proxy, although a secure one, in the browser and call it a VPN, that's bullshit, *pardon my French*. The feature is quite nice, but calling it *a VPN* could eventually be harmful to privacy, because of false sense of security. And then you release [Opera VPN](https://itunes.apple.com/us/app/opera-free-vpn-unlimited-free/id1080756781?mt=8) which *is* a VPN, unlike the VPN in the browser. Naming things, one of the only two hard things in Computer Science, right?
 
 ## Disclaimer
-This is just for research purposes, to study how things work, no harm intended.
+This is just for research purposes, to study how things work, no harm intended. The script might (and will) stop working at any time.
 
 ## Example `openssl s_client` command:
 ```
