@@ -131,7 +131,9 @@ if __name__ == '__main__':
     logging.debug('=============++===:::::::::::::::::::::~~~~~~~~~~~~~~~~~~~:~')
     logging.debug('https://github.com/spaze/oprah-proxy :::==~=~~~~~~~~=~~~~~~~')
 
-    op = OprahProxy('se0307', '2D67631A124F7AE10629ACA9ACA5AB21D67D30BDF6CF11C0B78735527FDF4DCA')
+    key = '<put API key here>'
+    client = '<put client type here>'
+    op = OprahProxy(client, key)
     op.register_subscriber()
     op.register_device()
     example_proxy = None
