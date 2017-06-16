@@ -4,6 +4,8 @@ import base64
 import hashlib
 import uuid
 import logging
+import os
+import sys
 
 try:
     import requests
@@ -131,9 +133,14 @@ if __name__ == '__main__':
     logging.debug('=============++===:::::::::::::::::::::~~~~~~~~~~~~~~~~~~~:~')
     logging.debug('https://github.com/spaze/oprah-proxy :::==~=~~~~~~~~=~~~~~~~')
 
-    key = '<put API key here>'
-    client = '<put client type here>'
-    op = OprahProxy(client, key)
+    if len(sys.argv) < 2:
+        logging.error('Missing client_type')
+    if len(sys.argv) < 3:
+        logging.error('Missing client_key')
+        logging.error('Usage: %s <client_type> <client_key>' % os.path.basename(sys.argv[0]));
+        exit(1)
+
+    op = OprahProxy(sys.argv[1], sys.argv[2])
     op.register_subscriber()
     op.register_device()
     example_proxy = None

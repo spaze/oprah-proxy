@@ -8,7 +8,10 @@ Opera "VPN" introduced in Opera 38 Developer Edition is not a VPN, it's actually
 *Not affiliated with Opera Software AS.*
 
 ## Usage
-Enter your API key and client type in `oprahProxy.py` and just run it. The script will generate credentials for you and list available proxies so you can use them elsewhere. `oprahProxy.py` can also be used as a Python module in your own application. Unfortunately I've had no success using any of these proxies as a proxy for `curl` for example. But it works with OpenSSL's `s_client` tool and the script will also print the required command for you.
+```
+oprahProxy.py <client_type> <client_key>
+```
+The script will generate credentials for you and list available proxies so you can use them elsewhere. `oprahProxy.py` can also be used as a Python module in your own application. Unfortunately I've had no success using any of these proxies as a proxy for `curl` for example. But it works with OpenSSL's `s_client` tool and the script will also print the required command for you.
 
 ## Requirements
 Python 3 & [Requests](http://docs.python-requests.org/). The API server works only with clients with Server Name Indication (SNI) support. Python 3 and Python 2.7.9+ include native support for SNI in their TLS modules. I was too lazy to build a version check, so I went with Python 3.
