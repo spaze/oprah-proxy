@@ -1,6 +1,8 @@
 # The Oprah Proxy
 *Generate credentials for Opera's "browser VPN"*
 
+**This tool is DEPRECATED, we've learned news things but that's it. If you need anonymity just use Tor.**
+
 !["Everybody gets a proxy" logo](logo.jpg)
 
 Opera "VPN" introduced in Opera 38 Developer Edition is not a VPN, it's actually a proxy for the browser only, but it's free and unlimited so why not use it for some other apps, too. There's also [Opera VPN for iOS](https://itunes.apple.com/us/app/opera-free-vpn-unlimited-free/id1080756781?mt=8) and [Opera VPN for Android](https://play.google.com/store/apps/details?id=com.opera.vpn), both are real VPN. This here is about the browser one.
